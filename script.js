@@ -1,4 +1,5 @@
-// sample room data
+
+// sample room data, given in the task
 const rooms = [
     { code: "R101", type: "Deluxe Room", price: 3500, maxGuests: 2 },
     { code: "R102", type: "Deluxe Room", price: 3500, maxGuests: 2 },
@@ -7,7 +8,7 @@ const rooms = [
     { code: "R301", type: "Family Room", price: 4200, maxGuests: 4 }
 ];
 
-// a sample of hardcoded bookings "room already booked" validation
+// a couple of hardcoded bookings, used only to test "room already booked" validation
 const existingBookings = [
     { roomCode: "R101", checkIn: "2026-04-05", checkOut: "2026-04-08" },
     { roomCode: "R201", checkIn: "2026-04-10", checkOut: "2026-04-12" }
@@ -16,17 +17,17 @@ const existingBookings = [
 const checkinInput = document.getElementById("checkin");
 const checkoutInput = document.getElementById("checkout");
 const guestFilter = document.getElementById("guestFilter");
-const roomTableBody = document.getElementById("roomTableBody");
+const roomList = document.getElementById("roomList");
 const sumRoom = document.getElementById("sumRoom");
 const sumNights = document.getElementById("sumNights");
 const sumTotal = document.getElementById("sumTotal");
 const errorBox = document.getElementById("errorBox");
 
-let selectedRoomCode = null;
+let selectedRoomCode = null; // holds the room the user picked
 
-
+// draws the room list, called on load and whenever dates/filter change
 function renderRooms() {
-    roomTableBody.innerHTML = "";
+    roomList.innerHTML = "";
     const minGuests = parseInt(guestFilter.value, 10);
 
     rooms.forEach(room => {
@@ -34,28 +35,32 @@ function renderRooms() {
         if (minGuests !== 0 && room.maxGuests < minGuests) return;
 
         const isBooked = isRoomBookedForSelectedDates(room.code);
-        const row = document.createElement("tr");
-        if (isBooked) row.classList.add("booked");
+        const isSelected = selectedRoomCode === room.code;
 
-        row.innerHTML = `
-      <td>
-        <input type="radio" name="roomChoice" value="${room.code}"
-          ${isBooked ? "disabled" : ""}
-          ${selectedRoomCode === room.code ? "checked" : ""}>
-      </td>
-      <td>${room.code}</td>
-      <td>${room.type}${isBooked ? " (Booked)" : ""}</td>
-      <td>₹${room.price.toLocaleString()}</td>
-      <td>${room.maxGuests}</td>
+        const card = document.createElement("div");
+        card.className = "room-card" + (isSelected ? " selected" : "") + (isBooked ? " disabled" : "");
+
+        card.innerHTML = `
+      <div class="room-info">
+        <div class="room-code">${room.code} &middot; ${room.type}</div>
+      </div>
+      <div class="room-guests">Max ${room.maxGuests} guests</div>
+      ${isBooked
+                ? `<div class="booked-tag">Booked</div>`
+                : `<div class="room-price">₹${room.price.toLocaleString()}<span class="per-night">per night</span></div>`
+            }
     `;
-        roomTableBody.appendChild(row);
-    });
 
-    document.querySelectorAll('input[name="roomChoice"]').forEach(radio => {
-        radio.addEventListener("change", e => {
-            selectedRoomCode = e.target.value;
-            calculateBooking();
-        });
+        // clicking a card selects that room, unless it's already booked
+        if (!isBooked) {
+            card.addEventListener("click", () => {
+                selectedRoomCode = room.code;
+                renderRooms();       // re-draw so the selected card gets highlighted
+                calculateBooking();
+            });
+        }
+
+        roomList.appendChild(card);
     });
 }
 
@@ -67,7 +72,7 @@ function isRoomBookedForSelectedDates(roomCode) {
 
     return existingBookings.some(b => {
         if (b.roomCode !== roomCode) return false;
-
+        // two date ranges overlap if one starts before the other ends, both ways
         return checkin < b.checkOut && checkout > b.checkIn;
     });
 }
@@ -128,5 +133,5 @@ checkinInput.addEventListener("change", () => { renderRooms(); calculateBooking(
 checkoutInput.addEventListener("change", () => { renderRooms(); calculateBooking(); });
 guestFilter.addEventListener("change", renderRooms);
 
-
+// first render when the page loads
 renderRooms();

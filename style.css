@@ -8,37 +8,64 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #eef2f6;
     color: #2c3e50;
-    padding: 30px 15px;
+}
+
+/* blue header bar */
+.page-header {
+    background: #2c5282;
+    color: #fff;
+    padding: 26px 30px;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 26px;
+    margin: 0;
+}
+
+.page-header p {
+    font-size: 13px;
+    color: #cfe0f5;
+    margin-top: 6px;
 }
 
 .container {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 15px 40px;
+}
+
+.card {
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    padding: 30px;
-}
-
-h1 {
-    font-size: 22px;
-    margin-bottom: 4px;
-}
-
-p.subtitle {
-    color: #7f8c8d;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    padding: 26px 28px;
     margin-bottom: 20px;
-    font-size: 14px;
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #5a8fc4;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 8px;
 }
 
 h2 {
     font-size: 16px;
-    margin: 20px 0 12px;
+    margin-bottom: 16px;
     color: #34495e;
-    border-left: 4px solid #5a8fc4;
-    padding-left: 10px;
+    display: flex;
+    align-items: center;
 }
 
+/* date + filter inputs */
 .date-row {
     display: flex;
     gap: 20px;
@@ -49,6 +76,8 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 6px;
+    flex: 1;
+    min-width: 160px;
 }
 
 .field label {
@@ -59,66 +88,127 @@ h2 {
 
 input[type="date"],
 select {
-    padding: 8px 10px;
+    padding: 10px 12px;
     border: 1px solid #d1d9e0;
-    border-radius: 6px;
-    font-size: 14px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-th,
-td {
-    text-align: left;
-    padding: 10px 8px;
-    border-bottom: 1px solid #ecf0f1;
-    font-size: 14px;
-}
-
-th {
-    background: #f7fafc;
-    color: #5a8fc4;
-    font-size: 13px;
-}
-
-tr.booked {
-    opacity: 0.5;
-}
-
-tr.booked td {
-    text-decoration: line-through;
-}
-
-#summary {
-    padding: 16px 18px;
     border-radius: 8px;
+    font-size: 14px;
+    background: #f9fbfd;
+}
+
+input[type="date"]:focus,
+select:focus {
+    outline: 2px solid #a9c6e8;
+}
+
+/* room list as cards, instead of a plain table */
+.room-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.room-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.room-card:hover {
+    border-color: #a9c6e8;
+    background: #f9fbfd;
+}
+
+.room-card.selected {
+    border-color: #5a8fc4;
+    background: #eef4fb;
+}
+
+.room-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.room-info {
+    flex: 1;
+}
+
+.room-code {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.room-type {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-top: 2px;
+}
+
+.room-price {
+    font-weight: 700;
+    color: #2c5282;
+    font-size: 15px;
+    text-align: right;
+}
+
+.room-price .per-night {
+    font-size: 11px;
+    color: #7f8c8d;
+    font-weight: 400;
+    display: block;
+}
+
+.room-guests {
+    font-size: 12px;
+    color: #5a8fc4;
+    background: #e3edf9;
+    padding: 4px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.booked-tag {
+    font-size: 12px;
+    color: #c0392b;
+    background: #fdecea;
+    padding: 4px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* summary box */
+#summary {
     background: #f7fafc;
     border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 18px 20px;
 }
 
 #summary .row {
     display: flex;
     justify-content: space-between;
-    padding: 6px 0;
+    padding: 7px 0;
     font-size: 14px;
 }
 
 #summary .row.total {
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
+    color: #2c5282;
     border-top: 1px solid #d1d9e0;
-    margin-top: 6px;
-    padding-top: 10px;
+    margin-top: 8px;
+    padding-top: 12px;
 }
 
 .error-box {
-    margin-top: 15px;
+    margin-top: 16px;
     padding: 12px 15px;
-    border-radius: 6px;
+    border-radius: 8px;
     background: #fdecea;
     color: #c0392b;
     font-size: 14px;
