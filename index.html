@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Room Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Hotel Room Booking</h1>
+        <p class="subtitle">Select your dates and a room to see the total price.</p>
+
+        <h2>1. Select Dates</h2>
+        <div class="date-row">
+            <div class="field">
+                <label for="checkin">Check-in Date</label>
+                <input type="date" id="checkin">
+            </div>
+            <div class="field">
+                <label for="checkout">Check-out Date</label>
+                <input type="date" id="checkout">
+            </div>
+            <div class="field">
+                <label for="guestFilter">Filter by Guests</label>
+                <select id="guestFilter">
+                    <option value="0">All Rooms</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                </select>
+            </div>
+        </div>
+
+        <h2>2. Select a Room</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Room Code</th>
+                    <th>Room Type</th>
+                    <th>Price / Night (₹)</th>
+                    <th>Max Guests</th>
+                </tr>
+            </thead>
+            <tbody id="roomTableBody"></tbody>
+        </table>
+
+        <h2>3. Booking Summary</h2>
+        <div id="summary">
+            <div class="row"><span>Selected Room</span><span id="sumRoom">-</span></div>
+            <div class="row"><span>Number of Nights</span><span id="sumNights">-</span></div>
+            <div class="row total"><span>Total Price</span><span id="sumTotal">-</span></div>
+        </div>
+
+        <div id="errorBox" style="display:none;" class="error-box"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
