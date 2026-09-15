@@ -1,4 +1,3 @@
-
 // sample room data, given in the task
 const rooms = [
     { code: "R101", type: "Deluxe Room", price: 3500, maxGuests: 2 },
