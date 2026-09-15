@@ -10,28 +10,34 @@ body {
     color: #2c3e50;
 }
 
-/* blue header bar - made smaller as requested */
+/* blue header bar - hotel name on left, title centered */
 .page-header {
     background: #2c5282;
     color: #fff;
-    padding: 14px 20px;
-    text-align: center;
+    padding: 14px 30px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
 }
 
 .hotel-name {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 2px;
     color: #a9c6e8;
     font-weight: 600;
+    text-align: left;
+}
+
+.header-title {
+    text-align: center;
+}
+
+.header-title h1 {
+    font-size: 18px;
     margin: 0;
 }
 
-.page-header h1 {
-    font-size: 18px;
-    margin: 2px 0 0;
-}
-
-.page-header .header-sub {
+.header-title .header-sub {
     font-size: 11px;
     color: #cfe0f5;
     margin-top: 4px;
